@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campanhas de Email</title>
+    <title>Hub de Emails</title>
     <style>
         * {
             margin: 0;
@@ -16,9 +16,9 @@
             background: #ffffff;
             min-height: 100vh;
             display: flex;
-            align-items: center;
+            align-items: center; /* Se a lista ficar muito longa, pode remover isso para evitar cortes no topo */
             justify-content: center;
-            padding: 20px;
+            padding: 40px 20px;
         }
 
         .container {
@@ -26,7 +26,7 @@
             border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             padding: 40px;
-            max-width: 600px;
+            max-width: 800px; /* Aumentei um pouco para dar respiro */
             width: 100%;
             text-align: center;
         }
@@ -44,9 +44,20 @@
             font-size: 1.1rem;
         }
 
+        /* Nova classe para separar as categorias */
+        .section-title {
+            text-align: left;
+            font-size: 1.5rem;
+            color: #2563eb;
+            font-weight: 700;
+            margin: 40px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
         .campaigns {
-            display: flex;
-            flex-direction: column;
+            display: grid; /* Mudei para grid para ficar mais organizado se tiver muitos */
+            grid-template-columns: 1fr;
             gap: 20px;
         }
 
@@ -58,6 +69,7 @@
             transition: all 0.3s ease;
             text-decoration: none;
             color: inherit;
+            text-align: left; /* Melhor leitura em lista */
         }
 
         .campaign-card:hover {
@@ -67,16 +79,20 @@
         }
 
         .campaign-number {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 700;
             color: #2563eb;
             margin-bottom: 8px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            background: #e0e7ff;
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 6px;
         }
 
         .campaign-title {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             font-weight: 600;
             color: #333;
             margin-bottom: 8px;
@@ -89,7 +105,7 @@
         }
 
         .footer {
-            margin-top: 40px;
+            margin-top: 60px;
             padding-top: 20px;
             border-top: 1px solid #e9ecef;
             color: #999;
@@ -109,16 +125,27 @@
 </head>
 <body>
     <div class="container">
-        <h1>Campanhas de Email</h1>
-        <p class="subtitle">Selecione uma campanha para visualizar</p>
+        <h1>Hub de Emails</h1>
+        <p class="subtitle">Selecione uma peça para visualizar</p>
         
+        <h2 class="section-title">Newsletters</h2>
+        <div class="campaigns">
+            <a href="emails/newsletter/newsletter_01_26/message.html" class="campaign-card">
+                <div class="campaign-number">JANEIRO 2026</div>
+                <div class="campaign-title">Transformando a forma como a sua empresa decide preços</div>
+                <div class="campaign-description">
+                    Newsletter com insights sobre decisões baseadas em dados, controle de custos e precificação estratégica para transformar resultados.
+                </div>
+            </a>
+        </div>
+
+        <h2 class="section-title">Campanhas</h2>
         <div class="campaigns">
             <a href="emails/campanhas/fivel_revematech/index.html" class="campaign-card">
                 <div class="campaign-number">EMAIL 1</div>
                 <div class="campaign-title">Fivel Revematech</div>
                 <div class="campaign-description">
-                    Campanha da Fivel Revematech com informações sobre produtos, 
-                    serviços e soluções tecnológicas oferecidas.
+                    Informações sobre produtos, serviços e soluções tecnológicas oferecidas.
                 </div>
             </a>
             
@@ -126,8 +153,7 @@
                 <div class="campaign-number">EMAIL 2</div>
                 <div class="campaign-title">Inteligência de Preços - Indústria</div>
                 <div class="campaign-description">
-                    Campanha focada em inteligência de preços para o setor industrial, 
-                    destacando soluções e benefícios para empresas do segmento.
+                    Soluções e benefícios focados no segmento industrial.
                 </div>
             </a>
 
@@ -135,17 +161,15 @@
                 <div class="campaign-number">EMAIL 3</div>
                 <div class="campaign-title">Gestão de Custos e Precificação</div>
                 <div class="campaign-description">
-                    Campanha sobre gestão de custos e precificação estratégica, 
-                    destacando como dados e tecnologia podem revolucionar os processos.
+                    Como dados e tecnologia podem revolucionar os processos de custos.
                 </div>
             </a>
 
             <a href="emails/campanhas/industria_precificacao/index.html" class="campaign-card">
                 <div class="campaign-number">EMAIL 4</div>
-                <div class="campaign-title">Indústria Precificação</div>
+                <div class="campaign-title">Indústria Precificação (FIVEL 2025)</div>
                 <div class="campaign-description">
-                    Campanha sobre precificação industrial com foco na FIVEL 2025, 
-                    apresentando Edson Clementino e suas estratégias de gestão de custos.
+                    Apresentando Edson Clementino e suas estratégias de gestão de custos.
                 </div>
             </a>
 
@@ -153,8 +177,7 @@
                 <div class="campaign-number">EMAIL 5</div>
                 <div class="campaign-title">Aumente o Lucro da sua empresa!</div>
                 <div class="campaign-description">
-                    Campanha focada em aumentar margens através da precificação estratégica, 
-                    com palestra na FIVEL 2025 sobre gestão de custos.
+                    Foco em aumentar margens através da precificação estratégica.
                 </div>
             </a>
 
@@ -162,8 +185,7 @@
                 <div class="campaign-number">EMAIL 6</div>
                 <div class="campaign-title">Últimos Dias</div>
                 <div class="campaign-description">
-                    Campanha de urgência para os últimos dias de um evento ou promoção, 
-                    criando senso de escassez e incentivando ação imediata.
+                    Gatilho de urgência e escassez para incentivar ação imediata.
                 </div>
             </a>
 
@@ -171,21 +193,24 @@
                 <div class="campaign-number">EMAIL 7</div>
                 <div class="campaign-title">Agradecimento</div>
                 <div class="campaign-description">
-                    Template de agradecimento para clientes e parceiros, 
-                    com design profissional e links para mais informações.
+                    Template de agradecimento para clientes e parceiros.
                 </div>
             </a>
+        </div>
+
+        <h2 class="section-title">Ebooks & Materiais</h2>
+        <div class="campaigns">
             <a href="emails/ebooks/quando_o_preco_fala_a_verdade/index.html" class="campaign-card">
-                <div class="campaign-number">Ebook Prático</div>
+                <div class="campaign-number">EBOOK GRATUITO</div>
                 <div class="campaign-title">Quando o preço fala a verdade</div>
                 <div class="campaign-description">
-                    Ebook Prático para aumentar o lucro da sua empresa, com estratégias de precificação e gestão de custos.
+                    Guia prático para aumentar o lucro com estratégias de precificação.
                 </div>
             </a>
         </div>
         
         <div class="footer">
-            <p>Desenvolvido para campanhas de email marketing</p>
+            <p>Gerenciador de Campanhas de Email</p>
         </div>
     </div>
 </body>
