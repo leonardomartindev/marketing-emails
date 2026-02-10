@@ -1,410 +1,418 @@
 <!doctype html>
 <html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hub Corporativo de Emails</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hub Corporativo de Emails</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        /* Paleta de Cores Institucional (Slate & Royal Blue) */
+        --primary: #2563eb;
+        --primary-dark: #1e40af;
+        --bg-body: #f8fafc;
+        --bg-surface: #ffffff;
+        --border-color: #e2e8f0;
 
-  <style>
-    :root {
-      /* Paleta de Cores Institucional (Slate & Royal Blue) */
-      --primary: #2563eb;
-      --primary-dark: #1e40af;
-      --bg-body: #f8fafc;
-      --bg-surface: #ffffff;
-      --border-color: #e2e8f0;
+        --text-primary: #0f172a;
+        --text-secondary: #64748b;
+        --text-tertiary: #94a3b8;
 
-      --text-primary: #0f172a;
-      --text-secondary: #64748b;
-      --text-tertiary: #94a3b8;
+        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        --shadow-md:
+          0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        --shadow-lg:
+          0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 
-      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-      --shadow-md:
-        0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-      --shadow-lg:
-        0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        --radius-lg: 16px;
+        --radius-md: 12px;
+        --radius-sm: 6px;
+      }
 
-      --radius-lg: 16px;
-      --radius-md: 12px;
-      --radius-sm: 6px;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: "Inter", sans-serif;
-      background-color: var(--bg-body);
-      color: var(--text-primary);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      padding: 60px 20px;
-      -webkit-font-smoothing: antialiased;
-      /* Renderização de fonte mais nítida */
-    }
-
-    .container {
-      width: 100%;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    /* Header */
-    header {
-      text-align: center;
-      margin-bottom: 60px;
-      position: relative;
-    }
-
-    /* Pequeno detalhe decorativo acima do título */
-    header::before {
-      content: "";
-      display: block;
-      width: 60px;
-      height: 6px;
-      background: var(--primary);
-      margin: 0 auto 24px auto;
-      border-radius: 10px;
-    }
-
-    h1 {
-      font-size: 2.25rem;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      color: var(--text-primary);
-      margin-bottom: 12px;
-    }
-
-    .subtitle {
-      color: var(--text-secondary);
-      font-size: 1.125rem;
-      font-weight: 400;
-      max-width: 500px;
-      margin: 0 auto;
-      line-height: 1.6;
-    }
-
-    /* Accordion Styles */
-    .category-section {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-lg);
-      margin-bottom: 20px;
-      overflow: hidden;
-      transition:
-        box-shadow 0.3s ease,
-        border-color 0.3s ease;
-    }
-
-    .category-section:hover {
-      border-color: #cbd5e1;
-      box-shadow: var(--shadow-md);
-    }
-
-    .section-header {
-      padding: 24px 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      background: var(--bg-surface);
-      user-select: none;
-    }
-
-    .section-title {
-      font-size: 1.125rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .badge-count {
-      background-color: #f1f5f9;
-      color: var(--text-secondary);
-      font-size: 0.75rem;
-      font-weight: 600;
-      padding: 4px 10px;
-      border-radius: 99px;
-    }
-
-    .chevron {
-      width: 20px;
-      height: 20px;
-      color: var(--text-tertiary);
-      transition:
-        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-        color 0.3s ease;
-    }
-
-    .category-section.active .chevron {
-      transform: rotate(180deg);
-      color: var(--primary);
-    }
-
-    /* Conteúdo Expansível */
-    .section-content {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      /* Animação suave */
-      background-color: #f8fafc;
-      border-top: 1px solid transparent;
-    }
-
-    .category-section.active .section-content {
-      border-top-color: var(--border-color);
-    }
-
-    .campaigns-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 24px;
-      padding: 32px;
-    }
-
-    /* Cards */
-    .campaign-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      padding: 24px;
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-      position: relative;
-      height: 100%;
-    }
-
-    .campaign-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lg);
-      border-color: #bfdbfe;
-    }
-
-    .card-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 16px;
-    }
-
-    .tag {
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: var(--primary);
-      background: #eff6ff;
-      padding: 6px 10px;
-      border-radius: var(--radius-sm);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    /* Ícone de link externo */
-    .icon-link {
-      width: 18px;
-      height: 18px;
-      color: var(--text-tertiary);
-      transition: color 0.2s;
-    }
-
-    .campaign-card:hover .icon-link {
-      color: var(--primary);
-    }
-
-    .card-title {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 10px;
-      line-height: 1.5;
-    }
-
-    .card-desc {
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
-
-    /* Footer */
-    .footer {
-      margin-top: 80px;
-      text-align: center;
-      color: var(--text-tertiary);
-      font-size: 0.875rem;
-      border-top: 1px solid var(--border-color);
-      padding-top: 32px;
-    }
-
-    @media (max-width: 640px) {
-      .container {
+      * {
+        margin: 0;
         padding: 0;
+        box-sizing: border-box;
       }
 
-      .section-header {
-        padding: 20px;
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--bg-body);
+        color: var(--text-primary);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        padding: 60px 20px;
+        -webkit-font-smoothing: antialiased;
+        /* Renderização de fonte mais nítida */
       }
 
-      .campaigns-grid {
-        padding: 20px;
-        grid-template-columns: 1fr;
+      .container {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      /* Header */
+      header {
+        text-align: center;
+        margin-bottom: 60px;
+        position: relative;
+      }
+
+      /* Pequeno detalhe decorativo acima do título */
+      header::before {
+        content: "";
+        display: block;
+        width: 60px;
+        height: 6px;
+        background: var(--primary);
+        margin: 0 auto 24px auto;
+        border-radius: 10px;
       }
 
       h1 {
-        font-size: 1.75rem;
+        font-size: 2.25rem;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        color: var(--text-primary);
+        margin-bottom: 12px;
       }
-    }
-  </style>
-</head>
 
-<body>
-  <div class="container">
-    <header>
-      <h1>Hub de Campanhas</h1>
-      <p class="subtitle">
-        Central de visualização de peças de e-mail marketing e comunicados
-        estratégicos.
-      </p>
-    </header>
+      .subtitle {
+        color: var(--text-secondary);
+        font-size: 1.125rem;
+        font-weight: 400;
+        max-width: 500px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
 
-    <div id="hub-content"></div>
+      /* Accordion Styles */
+      .category-section {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        margin-bottom: 20px;
+        overflow: hidden;
+        transition:
+          box-shadow 0.3s ease,
+          border-color 0.3s ease;
+      }
 
-    <div class="footer">
-      <p>© 2026 Plataforma de Marketing. Uso interno.</p>
+      .category-section:hover {
+        border-color: #cbd5e1;
+        box-shadow: var(--shadow-md);
+      }
+
+      .section-header {
+        padding: 24px 32px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        background: var(--bg-surface);
+        user-select: none;
+      }
+
+      .section-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .badge-count {
+        background-color: #f1f5f9;
+        color: var(--text-secondary);
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 4px 10px;
+        border-radius: 99px;
+      }
+
+      .chevron {
+        width: 20px;
+        height: 20px;
+        color: var(--text-tertiary);
+        transition:
+          transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+          color 0.3s ease;
+      }
+
+      .category-section.active .chevron {
+        transform: rotate(180deg);
+        color: var(--primary);
+      }
+
+      /* Conteúdo Expansível */
+      .section-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        /* Animação suave */
+        background-color: #f8fafc;
+        border-top: 1px solid transparent;
+      }
+
+      .category-section.active .section-content {
+        border-top-color: var(--border-color);
+      }
+
+      .campaigns-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 24px;
+        padding: 32px;
+      }
+
+      /* Cards */
+      .campaign-card {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        padding: 24px;
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        position: relative;
+        height: 100%;
+      }
+
+      .campaign-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
+        border-color: #bfdbfe;
+      }
+
+      .card-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 16px;
+      }
+
+      .tag {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: var(--primary);
+        background: #eff6ff;
+        padding: 6px 10px;
+        border-radius: var(--radius-sm);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      /* Ícone de link externo */
+      .icon-link {
+        width: 18px;
+        height: 18px;
+        color: var(--text-tertiary);
+        transition: color 0.2s;
+      }
+
+      .campaign-card:hover .icon-link {
+        color: var(--primary);
+      }
+
+      .card-title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 10px;
+        line-height: 1.5;
+      }
+
+      .card-desc {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+      }
+
+      /* Footer */
+      .footer {
+        margin-top: 80px;
+        text-align: center;
+        color: var(--text-tertiary);
+        font-size: 0.875rem;
+        border-top: 1px solid var(--border-color);
+        padding-top: 32px;
+      }
+
+      @media (max-width: 640px) {
+        .container {
+          padding: 0;
+        }
+
+        .section-header {
+          padding: 20px;
+        }
+
+        .campaigns-grid {
+          padding: 20px;
+          grid-template-columns: 1fr;
+        }
+
+        h1 {
+          font-size: 1.75rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <header>
+        <h1>Hub de Campanhas</h1>
+        <p class="subtitle">
+          Central de visualização de peças de e-mail marketing e comunicados
+          estratégicos.
+        </p>
+      </header>
+
+      <div id="hub-content"></div>
+
+      <div class="footer">
+        <p>© 2026 Plataforma de Marketing. Uso interno.</p>
+      </div>
     </div>
-  </div>
 
-  <script>
-    // DADOS
-    const emailsData = [
-      {
-        category: "Newsletters",
-        items: [
-          {
-            label: "JANEIRO 2026",
-            title: "Transformando a forma como a sua empresa decide preços",
-            desc: "Insights sobre decisões baseadas em dados, controle de custos e precificação.",
-            link: "emails/newsletter/newsletter_01_26/message.html",
-          },
-          {
-            label: "JANEIRO 2026",
-            title: "Escolher um Software de Gestão de Custos é estratégico",
-            desc: "Decisão estratégica na escolha de software de gestão de custos.",
-            link: "emails/newsletter/email_marketing_01/index.html",
-          },
-        ],
-      },
-      {
-        category: "Campanhas Promocionais",
-        items: [
-          {
-            label: "EMAIL 1",
-            title: "Fivel Revematech",
-            desc: "Informações sobre produtos, serviços e soluções tecnológicas oferecidas.",
-            link: "emails/campanhas/fivel_revematech/index.html",
-          },
-          {
-            label: "EMAIL 2",
-            title: "Inteligência de Preços - Indústria",
-            desc: "Soluções e benefícios focados no segmento industrial.",
-            link: "emails/campanhas/inteligencia_precos_industria/index.html",
-          },
-          {
-            label: "EMAIL 3",
-            title: "Gestão de Custos e Precificação",
-            desc: "Como dados e tecnologia podem revolucionar os processos de custos.",
-            link: "emails/campanhas/gestao_custos_precificacao/index.html",
-          },
-          {
-            label: "EMAIL 4",
-            title: "Indústria Precificação (FIVEL 2025)",
-            desc: "Apresentando Edson Clementino e estratégias de gestão.",
-            link: "emails/campanhas/industria_precificacao/index.html",
-          },
-          {
-            label: "EMAIL 5",
-            title: "Aumente o Lucro da sua empresa!",
-            desc: "Foco em aumentar margens através da precificação estratégica.",
-            link: "emails/campanhas/margin/index.html",
-          },
-          {
-            label: "EMAIL 6",
-            title: "Últimos Dias",
-            desc: "Gatilho de urgência e escassez para incentivar ação imediata.",
-            link: "emails/campanhas/ultimos_dias/index.html",
-          },
-          {
-            label: "EMAIL 7",
-            title: "Agradecimento",
-            desc: "Template de agradecimento para clientes e parceiros.",
-            link: "emails/campanhas/agradecimento/index.html",
-          },
-        ],
-      },
-      {
-        category: "Ebooks & Materiais Ricos",
-        items: [
-          {
-            label: "EBOOK",
-            title: "Quando o preço fala a verdade",
-            desc: "Guia prático para aumentar o lucro com estratégias de precificação.",
-            link: "emails/ebooks/quando_o_preco_fala_a_verdade/index.html",
-          },
-        ],
-      },
-      {
-        category: "Distribuidores",
-        items: [
-          {
-            label: "PARCEIRO",
-            title: "Distribuidor Regional 01",
-            desc: "Campanha focada na região norte com condições especiais.",
-            link: "emails/distribuidores/01/index.html",
-          },
-          {
-            label: "PARCEIRO",
-            title: "Distribuidor Regional 02",
-            desc: "Campanha de incentivo para revenda e distribuição.",
-            link: "emails/distribuidores/02/index.html",
-          },
-          {
-            label: "PARCEIRO",
-            title: "Distribuidor Regional 03",
-            desc: "Distribuidor 03",
-            link: "emails/distribuidores/03/index.html",
-          },
-        ],
-      },
-    ];
+    <script>
+      // DADOS
+      const emailsData = [
+        {
+          category: "Newsletters",
+          items: [
+            {
+              label: "JANEIRO 2026",
+              title: "Transformando a forma como a sua empresa decide preços",
+              desc: "Insights sobre decisões baseadas em dados, controle de custos e precificação.",
+              link: "emails/newsletter/newsletter_01_26/message.html",
+            },
+            {
+              label: "JANEIRO 2026",
+              title: "Escolher um Software de Gestão de Custos é estratégico",
+              desc: "Decisão estratégica na escolha de software de gestão de custos.",
+              link: "emails/newsletter/email_marketing_01/index.html",
+            },
+            {
+              label: "FEVEREIRO 2026",
+              title: "Transformando a forma como a sua empresa decide preços",
+              desc: "Insights sobre decisões baseadas em dados, controle de custos e precificação.",
+              link: "emails/newsletter/newsletter_10_02_2026/index.html",
+            },
+          ],
+        },
+        {
+          category: "Campanhas Promocionais",
+          items: [
+            {
+              label: "EMAIL 1",
+              title: "Fivel Revematech",
+              desc: "Informações sobre produtos, serviços e soluções tecnológicas oferecidas.",
+              link: "emails/campanhas/fivel_revematech/index.html",
+            },
+            {
+              label: "EMAIL 2",
+              title: "Inteligência de Preços - Indústria",
+              desc: "Soluções e benefícios focados no segmento industrial.",
+              link: "emails/campanhas/inteligencia_precos_industria/index.html",
+            },
+            {
+              label: "EMAIL 3",
+              title: "Gestão de Custos e Precificação",
+              desc: "Como dados e tecnologia podem revolucionar os processos de custos.",
+              link: "emails/campanhas/gestao_custos_precificacao/index.html",
+            },
+            {
+              label: "EMAIL 4",
+              title: "Indústria Precificação (FIVEL 2025)",
+              desc: "Apresentando Edson Clementino e estratégias de gestão.",
+              link: "emails/campanhas/industria_precificacao/index.html",
+            },
+            {
+              label: "EMAIL 5",
+              title: "Aumente o Lucro da sua empresa!",
+              desc: "Foco em aumentar margens através da precificação estratégica.",
+              link: "emails/campanhas/margin/index.html",
+            },
+            {
+              label: "EMAIL 6",
+              title: "Últimos Dias",
+              desc: "Gatilho de urgência e escassez para incentivar ação imediata.",
+              link: "emails/campanhas/ultimos_dias/index.html",
+            },
+            {
+              label: "EMAIL 7",
+              title: "Agradecimento",
+              desc: "Template de agradecimento para clientes e parceiros.",
+              link: "emails/campanhas/agradecimento/index.html",
+            },
+          ],
+        },
+        {
+          category: "Ebooks & Materiais Ricos",
+          items: [
+            {
+              label: "EBOOK",
+              title: "Quando o preço fala a verdade",
+              desc: "Guia prático para aumentar o lucro com estratégias de precificação.",
+              link: "emails/ebooks/quando_o_preco_fala_a_verdade/index.html",
+            },
+          ],
+        },
+        {
+          category: "Distribuidores",
+          items: [
+            {
+              label: "PARCEIRO",
+              title: "Distribuidor Regional 01",
+              desc: "Campanha focada na região norte com condições especiais.",
+              link: "emails/distribuidores/01/index.html",
+            },
+            {
+              label: "PARCEIRO",
+              title: "Distribuidor Regional 02",
+              desc: "Campanha de incentivo para revenda e distribuição.",
+              link: "emails/distribuidores/02/index.html",
+            },
+            {
+              label: "PARCEIRO",
+              title: "Distribuidor Regional 03",
+              desc: "Distribuidor 03",
+              link: "emails/distribuidores/03/index.html",
+            },
+          ],
+        },
+      ];
 
-    // RENDERIZAÇÃO
-    const container = document.getElementById("hub-content");
+      // RENDERIZAÇÃO
+      const container = document.getElementById("hub-content");
 
-    function renderHub() {
-      let html = "";
+      function renderHub() {
+        let html = "";
 
-      emailsData.forEach((section, index) => {
-        // Ícone de link externo (SVG)
-        const externalLinkIcon = `
+        emailsData.forEach((section, index) => {
+          // Ícone de link externo (SVG)
+          const externalLinkIcon = `
             <svg class="icon-link" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
           `;
 
-        const cardsHtml = section.items
-          .map(
-            (item) => `
+          const cardsHtml = section.items
+            .map(
+              (item) => `
                 <a href="${item.link}" class="campaign-card" target="_blank">
                     <div class="card-top">
                         <span class="tag">${item.label}</span>
@@ -414,17 +422,17 @@
                     <div class="card-desc">${item.desc}</div>
                 </a>
             `,
-          )
-          .join("");
+            )
+            .join("");
 
-        // Chevron Icon (Seta)
-        const chevronIcon = `
+          // Chevron Icon (Seta)
+          const chevronIcon = `
             <svg class="chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
             </svg>
           `;
 
-        html += `
+          html += `
             <div class="category-section">
                 <div class="section-header" onclick="toggleSection(this)">
                     <div class="section-title">
@@ -440,28 +448,27 @@
                 </div>
             </div>
           `;
-      });
+        });
 
-      container.innerHTML = html;
-    }
-
-    function toggleSection(headerElement) {
-      const section = headerElement.parentElement;
-      const content = section.querySelector(".section-content");
-
-      section.classList.toggle("active");
-
-      if (section.classList.contains("active")) {
-        // Pequeno truque para garantir que a transição funcione com altura dinâmica
-        content.style.maxHeight = content.scrollHeight + 40 + "px"; // +40 para padding de segurança
-      } else {
-        content.style.maxHeight = "0";
+        container.innerHTML = html;
       }
-    }
 
-    // Inicializa
-    renderHub();
-  </script>
-</body>
+      function toggleSection(headerElement) {
+        const section = headerElement.parentElement;
+        const content = section.querySelector(".section-content");
 
+        section.classList.toggle("active");
+
+        if (section.classList.contains("active")) {
+          // Pequeno truque para garantir que a transição funcione com altura dinâmica
+          content.style.maxHeight = content.scrollHeight + 40 + "px"; // +40 para padding de segurança
+        } else {
+          content.style.maxHeight = "0";
+        }
+      }
+
+      // Inicializa
+      renderHub();
+    </script>
+  </body>
 </html>
