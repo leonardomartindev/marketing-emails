@@ -95,11 +95,91 @@
         line-height: 1.6;
       }
 
-      /* Accordion Styles */
-      .category-section {
+      /* Empresa (nível superior) */
+      .company-section {
         background: var(--bg-surface);
         border: 1px solid var(--border-color);
         border-radius: var(--radius-lg);
+        margin-bottom: 24px;
+        overflow: hidden;
+        transition:
+          box-shadow 0.3s ease,
+          border-color 0.3s ease;
+      }
+
+      .company-section.active {
+        overflow: visible;
+      }
+
+      .company-section:hover {
+        border-color: #cbd5e1;
+        box-shadow: var(--shadow-md);
+      }
+
+      .company-header {
+        padding: 28px 32px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        background: var(--bg-surface);
+        user-select: none;
+      }
+
+      .company-title {
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        letter-spacing: -0.02em;
+        min-width: 0;
+      }
+
+      .company-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        background-color: #f1f5f9;
+        border-top: 1px solid transparent;
+      }
+
+      .company-section.active .company-content {
+        border-top-color: var(--border-color);
+        overflow: visible;
+      }
+
+      .company-section.active > .company-header .chevron {
+        transform: rotate(180deg);
+        color: var(--primary);
+      }
+
+      .company-inner {
+        padding: 20px;
+      }
+
+      .company-inner .category-section {
+        margin-bottom: 12px;
+      }
+
+      .company-inner .category-section:last-child {
+        margin-bottom: 0;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 48px 24px;
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+      }
+
+      /* Accordion Styles (categorias) */
+      .category-section {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
         margin-bottom: 20px;
         overflow: hidden;
         transition:
@@ -107,13 +187,17 @@
           border-color 0.3s ease;
       }
 
+      .category-section.active {
+        overflow: visible;
+      }
+
       .category-section:hover {
         border-color: #cbd5e1;
-        box-shadow: var(--shadow-md);
+        box-shadow: var(--shadow-sm);
       }
 
       .section-header {
-        padding: 24px 32px;
+        padding: 20px 24px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -123,7 +207,7 @@
       }
 
       .section-title {
-        font-size: 1.125rem;
+        font-size: 1.05rem;
         font-weight: 600;
         color: var(--text-primary);
         display: flex;
@@ -140,16 +224,22 @@
         border-radius: 99px;
       }
 
+      .company-title .badge-count {
+        background-color: #eff6ff;
+        color: var(--primary);
+      }
+
       .chevron {
         width: 20px;
         height: 20px;
         color: var(--text-tertiary);
+        flex-shrink: 0;
         transition:
           transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
           color 0.3s ease;
       }
 
-      .category-section.active .chevron {
+      .category-section.active > .section-header .chevron {
         transform: rotate(180deg);
         color: var(--primary);
       }
@@ -164,13 +254,14 @@
         border-top: 1px solid transparent;
       }
 
-      .category-section.active .section-content {
+      .category-section.active > .section-content {
         border-top-color: var(--border-color);
+        overflow: visible;
       }
 
       .campaigns-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
         gap: 24px;
         padding: 32px;
       }
@@ -254,8 +345,16 @@
           padding: 0;
         }
 
-        .section-header {
+        .company-header {
           padding: 20px;
+        }
+
+        .section-header {
+          padding: 16px 20px;
+        }
+
+        .company-inner {
+          padding: 12px;
         }
 
         .campaigns-grid {
@@ -265,6 +364,10 @@
 
         h1 {
           font-size: 1.75rem;
+        }
+
+        .company-title {
+          font-size: 1.15rem;
         }
       }
     </style>
@@ -289,172 +392,230 @@
 
     <script>
       // DADOS
-      const emailsData = [
+      const companiesData = [
         {
-          category: "Newsletters",
-          items: [
+          company: "RevemaTech",
+          categories: [
             {
-              label: "JANEIRO 2026",
-              title: "Transformando a forma como a sua empresa decide preços",
-              desc: "Insights sobre decisões baseadas em dados, controle de custos e precificação.",
-              link: "emails/newsletter/newsletter_01_26/message.html",
+              category: "Newsletters",
+              items: [
+                {
+                  label: "JANEIRO 2026",
+                  title:
+                    "Transformando a forma como a sua empresa decide preços",
+                  desc: "Insights sobre decisões baseadas em dados, controle de custos e precificação.",
+                  link: "emails/newsletter/newsletter_01_26/message.html",
+                },
+                {
+                  label: "JANEIRO 2026",
+                  title:
+                    "Escolher um Software de Gestão de Custos é estratégico",
+                  desc: "Decisão estratégica na escolha de software de gestão de custos.",
+                  link: "emails/newsletter/email_marketing_01/index.html",
+                },
+                {
+                  label: "FEVEREIRO 2026",
+                  title:
+                    "Transformando a forma como a sua empresa decide preços",
+                  desc: "Insights sobre decisões baseadas em dados, controle de custos e precificação.",
+                  link: "emails/newsletter/newsletter_10_02_2026/index.html",
+                },
+              ],
             },
             {
-              label: "JANEIRO 2026",
-              title: "Escolher um Software de Gestão de Custos é estratégico",
-              desc: "Decisão estratégica na escolha de software de gestão de custos.",
-              link: "emails/newsletter/email_marketing_01/index.html",
+              category: "Campanhas Promocionais",
+              items: [
+                {
+                  label: "EMAIL 1",
+                  title: "Fivel Revematech",
+                  desc: "Informações sobre produtos, serviços e soluções tecnológicas oferecidas.",
+                  link: "emails/campanhas/fivel_revematech/index.html",
+                },
+                {
+                  label: "EMAIL 2",
+                  title: "Inteligência de Preços - Indústria",
+                  desc: "Soluções e benefícios focados no segmento industrial.",
+                  link: "emails/campanhas/inteligencia_precos_industria/index.html",
+                },
+                {
+                  label: "EMAIL 3",
+                  title: "Gestão de Custos e Precificação",
+                  desc: "Como dados e tecnologia podem revolucionar os processos de custos.",
+                  link: "emails/campanhas/gestao_custos_precificacao/index.html",
+                },
+                {
+                  label: "EMAIL 4",
+                  title: "Indústria Precificação (FIVEL 2025)",
+                  desc: "Apresentando Edson Clementino e estratégias de gestão.",
+                  link: "emails/campanhas/industria_precificacao/index.html",
+                },
+                {
+                  label: "EMAIL 5",
+                  title: "Aumente o Lucro da sua empresa!",
+                  desc: "Foco em aumentar margens através da precificação estratégica.",
+                  link: "emails/campanhas/margin/index.html",
+                },
+                {
+                  label: "EMAIL 6",
+                  title: "Últimos Dias",
+                  desc: "Gatilho de urgência e escassez para incentivar ação imediata.",
+                  link: "emails/campanhas/ultimos_dias/index.html",
+                },
+                {
+                  label: "EMAIL 7",
+                  title: "Agradecimento",
+                  desc: "Template de agradecimento para clientes e parceiros.",
+                  link: "emails/campanhas/agradecimento/index.html",
+                },
+              ],
             },
             {
-              label: "FEVEREIRO 2026",
-              title: "Transformando a forma como a sua empresa decide preços",
-              desc: "Insights sobre decisões baseadas em dados, controle de custos e precificação.",
-              link: "emails/newsletter/newsletter_10_02_2026/index.html",
+              category: "Ebooks & Materiais Ricos",
+              items: [
+                {
+                  label: "EBOOK",
+                  title: "Quando o preço fala a verdade",
+                  desc: "Guia prático para aumentar o lucro com estratégias de precificação.",
+                  link: "emails/ebooks/quando_o_preco_fala_a_verdade/index.html",
+                },
+              ],
+            },
+            {
+              category: "Distribuidores",
+              items: [
+                {
+                  label: "PARCEIRO",
+                  title: "Distribuidor Regional 01",
+                  desc: "Campanha focada na região norte com condições especiais.",
+                  link: "emails/distribuidores/01/index.html",
+                },
+                {
+                  label: "PARCEIRO",
+                  title: "Distribuidor Regional 02",
+                  desc: "Campanha de incentivo para revenda e distribuição.",
+                  link: "emails/distribuidores/02/index.html",
+                },
+                {
+                  label: "PARCEIRO",
+                  title: "Distribuidor Regional 03",
+                  desc: "Distribuidor 03",
+                  link: "emails/distribuidores/03/index.html",
+                },
+              ],
+            },
+            {
+              category: "Emails Mensais",
+              items: [
+                {
+                  label: "EMAILS-MENSAIS",
+                  title: "10 vantagens de usar sistema revprice",
+                  desc: "Campanha focada na região norte com condições especiais.",
+                  link: "emails/emails_mensais/10_vantagens_de_usar_sistema_revprice/index.html",
+                },
+              ],
             },
           ],
         },
         {
-          category: "Campanhas Promocionais",
-          items: [
+          company: "AGTechnologies",
+          categories: [],
+        },
+        {
+          company: "Infinity",
+          categories: [
             {
-              label: "EMAIL 1",
-              title: "Fivel Revematech",
-              desc: "Informações sobre produtos, serviços e soluções tecnológicas oferecidas.",
-              link: "emails/campanhas/fivel_revematech/index.html",
-            },
-            {
-              label: "EMAIL 2",
-              title: "Inteligência de Preços - Indústria",
-              desc: "Soluções e benefícios focados no segmento industrial.",
-              link: "emails/campanhas/inteligencia_precos_industria/index.html",
-            },
-            {
-              label: "EMAIL 3",
-              title: "Gestão de Custos e Precificação",
-              desc: "Como dados e tecnologia podem revolucionar os processos de custos.",
-              link: "emails/campanhas/gestao_custos_precificacao/index.html",
-            },
-            {
-              label: "EMAIL 4",
-              title: "Indústria Precificação (FIVEL 2025)",
-              desc: "Apresentando Edson Clementino e estratégias de gestão.",
-              link: "emails/campanhas/industria_precificacao/index.html",
-            },
-            {
-              label: "EMAIL 5",
-              title: "Aumente o Lucro da sua empresa!",
-              desc: "Foco em aumentar margens através da precificação estratégica.",
-              link: "emails/campanhas/margin/index.html",
-            },
-            {
-              label: "EMAIL 6",
-              title: "Últimos Dias",
-              desc: "Gatilho de urgência e escassez para incentivar ação imediata.",
-              link: "emails/campanhas/ultimos_dias/index.html",
-            },
-            {
-              label: "EMAIL 7",
-              title: "Agradecimento",
-              desc: "Template de agradecimento para clientes e parceiros.",
-              link: "emails/campanhas/agradecimento/index.html",
+              category: "Institucionais",
+              items: [
+                {
+                  label: "CAPACITAÇÃO",
+                  title: "Capacitação Técnica em PCIs — HTM Eletrônica",
+                  desc: "Compartilhamento de conhecimento em placas de circuito impresso e montagem eletrônica.",
+                  link: "emails/infinity/capacitacao_htm_pci/index.html",
+                },
+              ],
             },
           ],
         },
-        {
-          category: "Ebooks & Materiais Ricos",
-          items: [
-            {
-              label: "EBOOK",
-              title: "Quando o preço fala a verdade",
-              desc: "Guia prático para aumentar o lucro com estratégias de precificação.",
-              link: "emails/ebooks/quando_o_preco_fala_a_verdade/index.html",
-            },
-          ],
-        },
-        {
-          category: "Distribuidores",
-          items: [
-            {
-              label: "PARCEIRO",
-              title: "Distribuidor Regional 01",
-              desc: "Campanha focada na região norte com condições especiais.",
-              link: "emails/distribuidores/01/index.html",
-            },
-            {
-              label: "PARCEIRO",
-              title: "Distribuidor Regional 02",
-              desc: "Campanha de incentivo para revenda e distribuição.",
-              link: "emails/distribuidores/02/index.html",
-            },
-            {
-              label: "PARCEIRO",
-              title: "Distribuidor Regional 03",
-              desc: "Distribuidor 03",
-              link: "emails/distribuidores/03/index.html",
-            },
-          ],
-        },
-        {
-          category: "Emails Mensais",
-          items: [
-{
-              label: "EMAILS-MENSAIS",
-              title: "10 vantagens de usar sistema revprice",
-              desc: "Campanha focada na região norte com condições especiais.",
-              link: "emails/emails_mensais/10_vantagens_de_usar_sistema_revprice/index.html",
-            },
-          ]
-        }
       ];
+
+      const chevronIcon = `
+        <svg class="chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      `;
+
+      const externalLinkIcon = `
+        <svg class="icon-link" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+      `;
 
       // RENDERIZAÇÃO
       const container = document.getElementById("hub-content");
 
+      function countEmails(categories) {
+        return categories.reduce(
+          (total, cat) => total + (cat.items?.length || 0),
+          0,
+        );
+      }
+
+      function renderCategory(section) {
+        const cardsHtml = section.items
+          .map(
+            (item) => `
+              <a href="${item.link}" class="campaign-card" target="_blank">
+                  <div class="card-top">
+                      <span class="tag">${item.label}</span>
+                      ${externalLinkIcon}
+                  </div>
+                  <div class="card-title">${item.title}</div>
+                  <div class="card-desc">${item.desc}</div>
+              </a>
+          `,
+          )
+          .join("");
+
+        return `
+          <div class="category-section">
+              <div class="section-header" onclick="toggleSection(this)">
+                  <div class="section-title">
+                      ${section.category}
+                      <span class="badge-count">${section.items.length}</span>
+                  </div>
+                  ${chevronIcon}
+              </div>
+              <div class="section-content">
+                  <div class="campaigns-grid">
+                      ${cardsHtml}
+                  </div>
+              </div>
+          </div>
+        `;
+      }
+
       function renderHub() {
         let html = "";
 
-        emailsData.forEach((section, index) => {
-          // Ícone de link externo (SVG)
-          const externalLinkIcon = `
-            <svg class="icon-link" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-            </svg>
-          `;
-
-          const cardsHtml = section.items
-            .map(
-              (item) => `
-                <a href="${item.link}" class="campaign-card" target="_blank">
-                    <div class="card-top">
-                        <span class="tag">${item.label}</span>
-                        ${externalLinkIcon}
-                    </div>
-                    <div class="card-title">${item.title}</div>
-                    <div class="card-desc">${item.desc}</div>
-                </a>
-            `,
-            )
-            .join("");
-
-          // Chevron Icon (Seta)
-          const chevronIcon = `
-            <svg class="chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          `;
+        companiesData.forEach((company) => {
+          const totalEmails = countEmails(company.categories);
+          const innerHtml =
+            company.categories.length > 0
+              ? company.categories.map(renderCategory).join("")
+              : `<div class="empty-state">Nenhum email cadastrado</div>`;
 
           html += `
-            <div class="category-section">
-                <div class="section-header" onclick="toggleSection(this)">
-                    <div class="section-title">
-                        ${section.category}
-                        <span class="badge-count">${section.items.length}</span>
+            <div class="company-section">
+                <div class="company-header" onclick="toggleSection(this)">
+                    <div class="company-title">
+                        ${company.company}
+                        <span class="badge-count">${totalEmails}</span>
                     </div>
                     ${chevronIcon}
                 </div>
-                <div class="section-content">
-                    <div class="campaigns-grid">
-                        ${cardsHtml}
+                <div class="company-content">
+                    <div class="company-inner">
+                        ${innerHtml}
                     </div>
                 </div>
             </div>
@@ -464,18 +625,81 @@
         container.innerHTML = html;
       }
 
+      function getExpandableContent(section) {
+        return (
+          section.querySelector(":scope > .company-content") ||
+          section.querySelector(":scope > .section-content")
+        );
+      }
+
+      function measureNaturalHeight(content) {
+        const previous = content.style.maxHeight;
+        content.style.maxHeight = "none";
+        const height = content.scrollHeight;
+        content.style.maxHeight = previous;
+        return height;
+      }
+
+      function setOpenHeight(content, extra = 160) {
+        const height = measureNaturalHeight(content);
+        content.style.maxHeight = height + extra + "px";
+      }
+
+      function updateCompanyHeight(companySection) {
+        if (!companySection?.classList.contains("active")) return;
+
+        const companyContent = companySection.querySelector(
+          ":scope > .company-content",
+        );
+        if (!companyContent) return;
+
+        // Folga generosa para grades e categorias aninhadas
+        setOpenHeight(companyContent, 320);
+      }
+
+      function syncHeightsAfterToggle(section) {
+        const companySection = section.classList.contains("company-section")
+          ? section
+          : section.closest(".company-section");
+
+        requestAnimationFrame(() => {
+          if (section.classList.contains("category-section") &&
+              section.classList.contains("active")) {
+            const categoryContent = getExpandableContent(section);
+            if (categoryContent) setOpenHeight(categoryContent, 200);
+          }
+          updateCompanyHeight(companySection);
+        });
+      }
+
       function toggleSection(headerElement) {
         const section = headerElement.parentElement;
-        const content = section.querySelector(".section-content");
+        const content = getExpandableContent(section);
+        if (!content) return;
 
+        const opening = !section.classList.contains("active");
         section.classList.toggle("active");
 
-        if (section.classList.contains("active")) {
-          // Pequeno truque para garantir que a transição funcione com altura dinâmica
-          content.style.maxHeight = content.scrollHeight + 40 + "px"; // +40 para padding de segurança
+        if (opening) {
+          setOpenHeight(
+            content,
+            section.classList.contains("company-section") ? 320 : 200,
+          );
         } else {
           content.style.maxHeight = "0";
         }
+
+        syncHeightsAfterToggle(section);
+
+        // Recalcula ao fim da animação (categorias aninhadas mudam a altura)
+        const onTransitionEnd = (event) => {
+          if (event.target !== content || event.propertyName !== "max-height") {
+            return;
+          }
+          content.removeEventListener("transitionend", onTransitionEnd);
+          syncHeightsAfterToggle(section);
+        };
+        content.addEventListener("transitionend", onTransitionEnd);
       }
 
       // Inicializa
